@@ -1,96 +1,1165 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script defer src="/_vercel/insights/script.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css"
-    />
-    <title>Vercel HTML Starter</title>
-    <meta
-      name="description"
-      content="High-performance HTML based website template."
-    />
-  </head>
-  <body>
-    <h1>Vercel HTML Starter</h1>
-    <p>
-      This template is a simple, but powerful single
-      <code>index.html</code> file deployed to
-      <a href="https://vercel.com">Vercel</a>. When your site is deployed, all
-      static assets (like HTML, JavaScript, CSS, images, and more) are deployed
-      globally to every
-      <a href="https://vercel.com/docs/concepts/edge-network/overview"
-        >Vercel Edge Network</a
-      >
-      region.
-    </p>
-    <h2>Simple, privacy-friendly analytics</h2>
-    <p>
-      Want to understand your visitor traffic? Vercel Analytics gives you
-      first-party, privacy-friendly traffic analytics for your HTML site. This
-      template is already configured using the following script:
-    </p>
-    <pre><code>&lt;script defer src="/_vercel/insights/script.js"&gt;&lt;/script&gt;</code></pre>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/analytics">Vercel Analytics</a>.
-    </p>
-    <h2>Integrated with git</h2>
-    <p>
-      Deploying updates to your site is as simple as
-      <code>git push</code> thanks to Vercel's advanced
-      <a href="https://vercel.com/docs/concepts/git">Git Integration</a>.
-      Support for GitHub, GitLab, Bitbucket is zero-configuration, and with the
-      flexible Vercel CLI and API, you can integrate with any tool possible.
-    </p>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/docs/concepts/git">Git Integration</a>.
-    </p>
-    <h2>Fast <code>gzip</code> compression</h2>
-    <p>
-      To help ensure the smallest possible file sizes for your static assets,
-      the Vercel Edge Network compresses files by default using
-      <code>gzip</code>. You can also optionally use
-      <code>brotli</code> compressesion if you prefer.
-    </p>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/docs/concepts/edge-network/compression"
-        >compression</a
-      >.
-    </p>
-    <h2>Advanced routing configuration</h2>
-    <p>
-      Vercel gives you a variety of ways to configure the routing of your
-      website. For example, adding redirects, rewrites, or headers to your page.
-      While you can use <code>vercel.json</code> to define these through JSON,
-      you can also express your routing configuration as code using
-      <a href="https://vercel.com/docs/concepts/functions/edge-middleware"
-        >Vercel Edge Middleware</a
-      >.
-    </p>
-    <p>
-      Middleware runs before the
-      <a href="https://vercel.com/docs/concepts/edge-network/caching"
-        >Vercel Edge Network Cache</a
-      >, so you can configure routing exactly as your application needs. For
-      example, this template uses <code>middleware.js</code> defined in the root
-      of the repository to add additional security headers to the site:
-    </p>
-    <pre><code>referrer-policy: origin-when-cross-origin
-strict-transport-security: max-age=31536000; includeSubDomains; preload
-x-content-type-options: nosniff
-x-dns-prefetch-control: on
-x-frame-options: DENY</code></pre>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/docs/concepts/functions/edge-middleware"
-        >Vercel Edge Middleware</a
-      >.
-    </p>
-  </body>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lottery Prize</title>
+  <!-- Futuristic font from Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+  <style>
+    /* Global Styles for loading/minigame phases */
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+      color: #00ffcc;
+      font-family: 'Orbitron', sans-serif;
+      text-align: center;
+      transition: background 1s, color 1s;
+    }
+    /* Loading Bar */
+    #progress-bar {
+      width: 60%;
+      height: 25px;
+      background: #444;
+      margin: 20px auto;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 2px solid #00ffcc;
+    }
+    #progress {
+      height: 100%;
+      background: #00ff00;
+      width: 0%;
+      transition: width 0.3s;
+    }
+    /* Minigame Container */
+    .minigame-container {
+      margin-top: 20px;
+    }
+    /* Loading Text & Instructions */
+    #loading-text {
+      font-size: 22px;
+      margin-top: 10px;
+      text-shadow: 0 0 10px #00ffcc;
+    }
+    #instructions {
+      margin-top: 10px;
+      font-size: 20px;
+      color: cyan;
+      text-shadow: 0 0 5px cyan;
+    }
+    /* Buttons & Inputs */
+    button {
+      padding: 10px 15px;
+      background: #00ffcc;
+      border: none;
+      border-radius: 5px;
+      color: #000;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 5px;
+      box-shadow: 0 0 5px #00ffcc;
+      transition: transform 0.2s;
+    }
+    button:hover {
+      transform: scale(1.1);
+    }
+    input {
+      padding: 8px;
+      font-size: 16px;
+      border: 2px solid #00ffcc;
+      border-radius: 5px;
+      background: #000;
+      color: #00ffcc;
+    }
+    /* Pi Challenge Styles */
+    .pi-container {
+      display: none;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    #pi-display, #pi-timer {
+      display: none;
+      margin-top: 20px;
+      font-size: 24px;
+      color: yellow;
+    }
+    /* Help Box for Pi Digits */
+    @keyframes boxshake {
+      0% { transform: translate(0,0); }
+      20% { transform: translate(-2px, 2px); }
+      40% { transform: translate(2px, -2px); }
+      60% { transform: translate(-2px, -2px); }
+      80% { transform: translate(2px, 2px); }
+      100% { transform: translate(0, 0); }
+    }
+    .shaking-box {
+      animation: boxshake 1s infinite;
+      border: 2px solid #00ffcc;
+      padding: 10px;
+      margin: 10px auto;
+      width: 80%;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: #00ffcc;
+      font-size: 18px;
+      border-radius: 10px;
+    }
+    /* Final Phase (Dino Game) Styles */
+    /* Hide final phase elements by default */
+    #gameCanvas, #chat {
+      display: none;
+    }
+    #gameCanvas {
+      background: #000;
+      display: block;
+      margin: 20px auto;
+    }
+    #chat {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #fff;
+      font-family: Arial, sans-serif;
+      font-size: 18px;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 5px 10px;
+      border-radius: 5px;
+      pointer-events: none;
+    }
+    /* Stress and Quick Click Challenge Containers */
+    #stress-container, #quick-click-container {
+      margin-top: 20px;
+    }
+    /* CSS Transition Effects for Reset (fail) */
+    @keyframes screenshake {
+      0% { transform: translate(0, 0); }
+      20% { transform: translate(-10px, 10px); }
+      40% { transform: translate(10px, -10px); }
+      60% { transform: translate(-10px, -10px); }
+      80% { transform: translate(10px, 10px); }
+      100% { transform: translate(0, 0); }
+    }
+    .shake {
+      animation: screenshake 0.5s;
+    }
+    .reset-transition {
+      transition: background 1s, color 1s;
+      background: linear-gradient(135deg, #ff0000, #ff8080) !important;
+      color: #ffffff !important;
+    }
+    /* New Hi-Tech Screenshake & Transition for Winning */
+    @keyframes hiTechShake {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      20% { transform: translate(-15px, 15px) rotate(-5deg); }
+      40% { transform: translate(15px, -15px) rotate(5deg); }
+      60% { transform: translate(-15px, -15px) rotate(-5deg); }
+      80% { transform: translate(15px, 15px) rotate(5deg); }
+      100% { transform: translate(0, 0) rotate(0deg); }
+    }
+    .hi-tech-shake {
+      animation: hiTechShake 0.7s;
+    }
+    .win-transition {
+      transition: background 1s, color 1s;
+      background: linear-gradient(135deg, #00ffff, #0000ff) !important;
+      color: #ffff00 !important;
+    }
+    /* Quick Click Challenge Styling */
+    .quick-circle {
+      width: 50px;
+      height: 50px;
+      background: red;
+      border-radius: 50%;
+      display: inline-block;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    /* BSOD Overlay Styles */
+    #bsod {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #0000AA;
+      color: white;
+      font-family: Consolas, monospace;
+      text-align: center;
+      padding-top: 20vh;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+  <!-- Loading/Minigame Elements -->
+  <h1 id="main-title">Loading Lottery Prize... Please Wait</h1>
+  <div id="progress-bar"><div id="progress"></div></div>
+  <p id="loading-text">Progress: 0%</p>
+  <p id="instructions"></p>
+  <!-- Impossible mode button is initially hidden -->
+  <button id="impossible-toggle" style="display: none;">Impossible Mode: OFF</button>
+  <div class="minigame-container" id="minigame-container"></div>
+  <!-- Pi Challenge Elements -->
+  <div id="pi-display">Digits entered: </div>
+  <div id="pi-timer">Time Left: 30s</div>
+  <div class="pi-container" id="pi-container"></div>
+  <!-- Help Box for Pi Digits -->
+  <div id="pi-help" class="shaking-box" style="display: none;"></div>
+  <!-- Final Phase (Dino Game) Elements -->
+  <canvas id="gameCanvas" width="600" height="150"></canvas>
+  <div id="chat"></div>
+  <!-- Stress and Quick Click Challenge Containers -->
+  <div id="stress-container"></div>
+  <div id="quick-click-container"></div>
+  <!-- BSOD Overlay (Fake Blue Screen of Death) -->
+  <div id="bsod">
+    <h1>💀 A fatal error has occurred.</h1>
+    <p>System will restart...</p>
+    <p>Error Code: 0x00000050 (PAGE_FAULT_IN_NONPAGED_AREA)</p>
+    <p>If this is your first time seeing this error, please restart your computer.</p>
+  </div>
+ 
+  <!-- Script Section -->
+  <script>
+    /***********************
+     * Overall Game Script *
+     ***********************/
+    let hasCrashed = false;
+    let progress = 0;
+    let impossibleMode = false;
+    let activeMinigame = false;
+    let inPiPhase = false;
+    let loadingStuck = false;
+    let initialFreezeDone = false;
+    let minigameChainMode = false;
+    let loadingStartTime = Date.now();
+    let countdown, piCountdown, backwardCountdown;
+    let enteredDigits = "";
+    // The first 13 digits of Pi, entered backward.
+    // Forward: "3141592653589" → Expected backward input: "9853562951413"
+    const expectedPi = "9853562951413";
+    let piTimeLeft = 30;
+    let backwardTimeLeft = 30;
+   
+    // Global array for backward challenge sentences.
+    const backwardSentences = [
+      "The quick brown fox jumps over the lazy dog",
+      "Never gonna give you up, never gonna let you down",
+      "All your base are belong to us",
+      "I am inevitable",
+      "This sentence is a trap"
+    ];
+    let originalSentence = "";
+    let backwardSentence = "";
+   
+    // Global variables for final-phase extra minigame intervals.
+    let stressInterval, quickClickInterval;
+   
+    // Random game generators:
+    function getRandomTextGame() {
+      const words = ["speed", "flash", "quick", "rapid", "swift"];
+      const colors = ["red", "blue", "green", "purple", "orange", "pink", "yellow"];
+      const word = words[Math.floor(Math.random() * words.length)];
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      return {
+        type: 'text',
+        time: 2000,
+        prompt: `Type '<span style="color:${color}">${word}</span>' quickly!`,
+        answer: word
+      };
+    }
+   
+    function getRandomMathGame() {
+      const num1 = Math.floor(Math.random() * 50) + 1;
+      const num2 = Math.floor(Math.random() * 50) + 1;
+      return {
+        type: 'math',
+        time: 4000,
+        prompt: `What is ${num1} + ${num2}?`,
+        answer: (num1 + num2).toString()
+      };
+    }
+   
+    function getRandomColorGame() {
+      const colors = ["red", "blue", "green", "purple", "orange", "pink", "yellow"];
+      const targetColor = colors[Math.floor(Math.random() * colors.length)];
+      return {
+        type: 'color',
+        time: 2000,
+        prompt: `Click the ${targetColor.toUpperCase()} button!`,
+        colors: colors,
+        correctColor: targetColor
+      };
+    }
+   
+    // New minigame: Alarm Clock – wait until the alarm rings.
+    function getAlarmClockGame() {
+      let alarmTime = Math.floor(Math.random() * 5000) + 1000;
+      return {
+        type: 'alarm',
+        time: alarmTime+1000,
+        prompt: "Alarm Clock: Wait for the alarm to ring, then click 'Stop Alarm'!",
+        ringTime: alarmTime
+      };
+    }
+   
+    // New minigame: Random Letter – every key press randomizes the input.
+    function getRandomLetterGame() {
+      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const target = letters.charAt(Math.floor(Math.random() * letters.length));
+      return {
+        type: 'random-letter',
+        time: 15000,
+        prompt: `Random Letter: Type the letter: ${target}`,
+        targetLetter: target
+      };
+    }
+   
+    // New minigame: Progress Pause – click to unpause the progress bar.
+    function getProgressPauseGame() {
+      return {
+        type: 'progress-pause',
+        time: 5000,
+        prompt: "Progress Pause: The loading bar is paused! Click 'Unpause Progress' to continue!"
+      };
+    }
+   
+    document.getElementById('impossible-toggle').onclick = function() {
+      impossibleMode = !impossibleMode;
+      this.textContent = "Impossible Mode: " + (impossibleMode ? "ON" : "OFF");
+    };
+    if(progress>79 && !hasCrashed){
+      alert("Critical error");
+      failGame();
+    }
+    // Easter Egg: Ctrl+Shift+Q skips directly to the Pi Challenge.
+    document.addEventListener("keydown", function(event) {
+      if (event.ctrlKey && event.shiftKey && event.key === "Q") {
+        startPiChallenge();
+      }
+    });
+   
+    function updateProgress() {
+      if (activeMinigame || inPiPhase || minigameChainMode) return;
+     
+      if (!initialFreezeDone) {
+        const elapsed = Date.now() - loadingStartTime;
+        if (elapsed < 10000) {
+          let increase = Math.random() * (impossibleMode ? 1.5 : 4) * 0.1;
+          progress = Math.min(progress + increase, impossibleMode ? 99.9 : 100);
+          document.getElementById('progress').style.width = progress + '%';
+          document.getElementById('loading-text').textContent = `Progress: ${progress.toFixed(1)}%`;
+          setTimeout(updateProgress, 1500);
+          return;
+        } else {
+          initialFreezeDone = true;
+          loadingStuck = true;
+          showContinueButton();
+          return;
+        }
+      }
+     
+      let increase = Math.random() * (impossibleMode ? 1.5 : 4);
+      progress = Math.min(progress + increase, impossibleMode ? 99.9 : 100);
+      document.getElementById('progress').style.width = progress + '%';
+      document.getElementById('loading-text').textContent = `Progress: ${progress.toFixed(1)}%`;
+     
+      if (progress >= 100) {
+        startPiChallenge();
+      } else if (impossibleMode && progress >= 99.9) {
+        setTimeout(() => {
+          document.getElementById('loading-text').textContent = "Done!";
+          alert("Error 3929b23 has occurred. Please try again at another time");
+          progress = 98;
+          updateProgress();
+        }, 3000);
+      } else {
+        setTimeout(updateProgress, 1500);
+      }
+    }
+   
+    function showContinueButton() {
+      if (!document.getElementById("continue-button")) {
+        const btn = document.createElement("button");
+        btn.id = "continue-button";
+        btn.textContent = "Play minigames to speed up loading";
+        btn.onclick = startMinigameForChain;
+        document.body.appendChild(btn);
+      }
+    }
+   
+    function startMinigameForChain() {
+      const btn = document.getElementById("continue-button");
+      if (btn) btn.remove();
+      document.getElementById('impossible-toggle').style.display = "inline-block";
+      minigameChainMode = true;
+      startMinigameChain();
+    }
+   
+    function startMinigameChain() {
+      startMinigame(function() {
+        progress += 10;
+        if (progress > 100) progress = 100;
+        document.getElementById('progress').style.width = progress + '%';
+        document.getElementById('loading-text').textContent = `Progress: ${progress.toFixed(1)}%`;
+        if (progress < 100) {
+          startMinigameChain();
+        } else {
+          minigameChainMode = false;
+          startPiChallenge();
+        }
+      });
+    }
+   
+    function startMinigame(onSuccess) {
+      if (!onSuccess) onSuccess = updateProgress;
+      activeMinigame = true;
+      const container = document.getElementById('minigame-container');
+      container.style.display = "block";
+     
+      // Build the pool of minigames.
+      const games = [getRandomTextGame(), getRandomMathGame(), getRandomColorGame()];
+      games.push(getAlarmClockGame(), getRandomLetterGame(), getProgressPauseGame());
+      if (impossibleMode) {
+        games.push(
+          { type: 'text', prompt: "Type 'impossible' in 1s!", answer: 'impossible', time: 1000 },
+          { type: 'unwinnable', prompt: "What is 2 + 2? Why aren't you typing anything?", answer: () => Math.random().toString(), time: 3000 }
+        );
+      }
+     
+      const minigame = games[Math.floor(Math.random() * games.length)];
+     
+      // Standard minigame branch (text, math, unwinnable, color)
+      if (minigame.type === 'text' || minigame.type === 'math' || minigame.type === 'unwinnable' || minigame.type === 'color') {
+        container.innerHTML = `<p id="minigame-prompt">${minigame.prompt}</p><p class='timer'>Time Left: ${minigame.time / 1000}s</p>`;
+        let timeLeft = minigame.time / 1000;
+        const timerElem = container.querySelector('.timer');
+        countdown = setInterval(() => {
+          timeLeft--;
+          if (timerElem) timerElem.textContent = `Time Left: ${timeLeft}s`;
+          if (timeLeft <= 0) {
+            clearInterval(countdown);
+            failGame();
+          }
+        }, 1000);
+     
+        if (minigame.type === 'text' || minigame.type === 'math' || minigame.type === 'unwinnable') {
+          const input = document.createElement('input');
+          const button = document.createElement('button');
+          button.textContent = "Submit";
+          input.addEventListener("keyup", (event) => {
+            if (event.key === "Enter") {
+              button.click();
+            }
+          });
+          button.onclick = () => {
+            clearInterval(countdown);
+            let correctAnswer = typeof minigame.answer === 'function' ? minigame.answer() : minigame.answer;
+            if (input.value === correctAnswer) {
+              activeMinigame = false;
+              container.innerHTML = "";
+              onSuccess();
+            } else {
+              failGame();
+            }
+          };
+          container.appendChild(input);
+          container.appendChild(button);
+          input.focus();
+        }
+        else if (minigame.type === 'color') {
+          minigame.colors.forEach(color => {
+            const btn = document.createElement('button');
+            btn.textContent = color.toUpperCase();
+            btn.style.background = color;
+            btn.onclick = () => {
+              clearInterval(countdown);
+              if (color === minigame.correctColor) {
+                activeMinigame = false;
+                container.innerHTML = "";
+                onSuccess();
+              } else {
+                failGame();
+              }
+            };
+            container.appendChild(btn);
+          });
+        }
+      }
+      // Alarm Clock minigame branch.
+      else if (minigame.type === 'alarm') {
+        container.innerHTML = "";
+        const alarmDiv = document.createElement('div');
+        const promptP = document.createElement('p');
+        promptP.innerHTML = minigame.prompt;
+        alarmDiv.appendChild(promptP);
+        const localTimer = document.createElement('p');
+        localTimer.className = "timer";
+        let localTimeLeft = minigame.time / 1000;
+        localTimer.textContent = `Time Left: ${localTimeLeft}s`;
+        alarmDiv.appendChild(localTimer);
+        container.appendChild(alarmDiv);
+        const alarmCountdown = setInterval(() => {
+          localTimeLeft--;
+          localTimer.textContent = `Time Left: ${localTimeLeft}s`;
+          if (localTimeLeft <= 0) {
+            clearInterval(alarmCountdown);
+            failGame();
+          }
+        }, 1000);
+        setTimeout(() => {
+          alarmDiv.innerHTML = "<p>ALARM RINGING! Click the button to stop it!</p>";
+          const stopButton = document.createElement('button');
+          stopButton.textContent = "Stop Alarm";
+          stopButton.onclick = () => {
+            clearInterval(alarmCountdown);
+            activeMinigame = false;
+            container.innerHTML = "";
+            onSuccess();
+          };
+          alarmDiv.appendChild(stopButton);
+        }, minigame.ringTime);
+      }
+      // Random Letter minigame branch.
+      else if (minigame.type === 'random-letter') {
+        container.innerHTML = "";
+        const promptP = document.createElement('p');
+        promptP.innerHTML = minigame.prompt;
+        container.appendChild(promptP);
+        const input = document.createElement('input');
+        container.appendChild(input);
+        const button = document.createElement('button');
+        button.textContent = "Submit";
+        container.appendChild(button);
+        const localTimer = document.createElement('p');
+        localTimer.className = "timer";
+        let localTimeLeft = minigame.time / 1000;
+        localTimer.textContent = `Time Left: ${localTimeLeft}s`;
+        container.appendChild(localTimer);
+        const randomCountdown = setInterval(() => {
+          localTimeLeft--;
+          localTimer.textContent = `Time Left: ${localTimeLeft}s`;
+          if (localTimeLeft <= 0) {
+            clearInterval(randomCountdown);
+            failGame();
+          }
+        }, 1000);
+        input.addEventListener("keydown", (event) => {
+          event.preventDefault();
+          const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+          const randomLetter = letters.charAt(Math.floor(Math.random() * letters.length));
+          input.value = randomLetter;
+        });
+        button.onclick = () => {
+          clearInterval(randomCountdown);
+          if (input.value === minigame.targetLetter) {
+            activeMinigame = false;
+            container.innerHTML = "";
+            onSuccess();
+          } else {
+            failGame();
+          }
+        };
+        input.focus();
+      }
+      // Progress Pause minigame branch.
+      else if (minigame.type === 'progress-pause') {
+        container.innerHTML = "";
+        const pauseDiv = document.createElement('div');
+        const promptP = document.createElement('p');
+        promptP.innerHTML = minigame.prompt;
+        pauseDiv.appendChild(promptP);
+        const unpauseButton = document.createElement('button');
+        unpauseButton.textContent = "Unpause Progress";
+        pauseDiv.appendChild(unpauseButton);
+        const localTimer = document.createElement('p');
+        localTimer.className = "timer";
+        let localTimeLeft = minigame.time / 1000;
+        localTimer.textContent = `Time Left: ${localTimeLeft}s`;
+        pauseDiv.appendChild(localTimer);
+        container.appendChild(pauseDiv);
+        const pauseCountdown = setInterval(() => {
+          localTimeLeft--;
+          localTimer.textContent = `Time Left: ${localTimeLeft}s`;
+          if (localTimeLeft <= 0) {
+            clearInterval(pauseCountdown);
+            failGame();
+          }
+        }, 1000);
+        unpauseButton.onclick = () => {
+          clearInterval(pauseCountdown);
+          activeMinigame = false;
+          container.innerHTML = "";
+          onSuccess();
+        };
+      }
+    }
+   
+    // failGame() triggers a screenshake and transition before resetting.
+    function failGame() {
+      document.body.classList.add("shake", "reset-transition");
+      clearInterval(stressInterval);
+      clearInterval(quickClickInterval);
+      setTimeout(() => {
+        document.body.classList.remove("shake", "reset-transition");
+        resetGame();
+      }, 1500);
+    }
+   
+    // resetGame() clears game state and returns to the loading phase.
+    function resetGame() {
+      progress = 0;
+      activeMinigame = false;
+      inPiPhase = false;
+      loadingStuck = false;
+      initialFreezeDone = false;
+      minigameChainMode = false;
+      loadingStartTime = Date.now();
+      piTimeLeft = 30;
+      enteredDigits = "";
+      originalSentence = "";
+      backwardSentence = "";
+      document.body.style.background = "#1e1e1e";
+      document.body.style.color = "white";
+      document.getElementById('main-title').textContent = "Loading... Please Wait";
+      document.getElementById('progress-bar').style.display = "block";
+      document.getElementById('loading-text').style.display = "block";
+      document.getElementById('instructions').style.display = "block";
+      document.getElementById('main-title').style.display = "block";
+      document.getElementById('impossible-toggle').style.display = "none";
+      document.getElementById('minigame-container').style.display = "none";
+      document.getElementById('pi-container').style.display = "none";
+      document.getElementById('pi-display').style.display = "none";
+      document.getElementById('pi-timer').style.display = "none";
+      document.getElementById('pi-help').style.display = "none";
+      document.getElementById('gameCanvas').style.display = "none";
+      document.getElementById('chat').style.display = "none";
+      document.getElementById('stress-container').style.display = "none";
+      document.getElementById('quick-click-container').style.display = "none";
+      document.getElementById('bsod').style.display = "none";
+      const contBtn = document.getElementById("continue-button");
+      if (contBtn) contBtn.remove();
+      // Remove virus message overlay if it exists.
+      const virusMsg = document.getElementById("virus-message");
+      if (virusMsg) virusMsg.remove();
+      updateProgress();
+    }
+   
+    function startPiChallenge() {
+      inPiPhase = true;
+      clearInterval(countdown);
+      document.body.style.background = "black";
+      document.body.style.color = "yellow";
+      document.getElementById('main-title').textContent = "Enter the first 13 digits of Pi backward!";
+      document.getElementById('progress-bar').style.display = "none";
+      document.getElementById('loading-text').style.display = "none";
+      document.getElementById('instructions').style.display = "none";
+      document.getElementById('impossible-toggle').style.display = "none";
+      document.getElementById('minigame-container').style.display = "none";
+      document.getElementById('minigame-container').innerHTML = "";
+     
+      document.getElementById('pi-container').style.display = "flex";
+      document.getElementById('pi-display').style.display = "block";
+      document.getElementById('pi-timer').style.display = "block";
+     
+      // Show the help box with the first 100 digits of pi.
+      document.getElementById('pi-help').style.display = "block";
+      document.getElementById('pi-help').innerText = "First few digits of π: 3.1415926535897932384626433";
+     
+      piTimeLeft = 30;
+      startPiTimer();
+     
+      enteredDigits = "";
+      updatePiDisplay();
+     
+      generatePiButtons();
+    }
+   
+    function startPiTimer() {
+      clearInterval(piCountdown);
+      piTimeLeft = 30;
+      const piTimerElem = document.getElementById('pi-timer');
+      piTimerElem.textContent = `Time Left: ${piTimeLeft}s`;
+      piCountdown = setInterval(() => {
+        piTimeLeft--;
+        piTimerElem.textContent = `Time Left: ${piTimeLeft}s`;
+        if (piTimeLeft <= 0) {
+          clearInterval(piCountdown);
+          alert("Time's up! Restarting game to loading phase...");
+          failGame();
+        }
+      }, 1000);
+    }
+   
+    function generatePiButtons() {
+      const container = document.getElementById('pi-container');
+      container.innerHTML = "";
+      for (let i = 0; i < 10; i++) {
+        const button = document.createElement('button');
+        button.textContent = i;
+        button.style.width = "40px";
+        button.style.height = "40px";
+        button.style.margin = "5px";
+        button.style.fontSize = "20px";
+        button.onclick = () => checkPiDigit(i);
+        container.appendChild(button);
+      }
+    }
+   
+    function updatePiDisplay() {
+      const piDisplay = document.getElementById("pi-display");
+      piDisplay.textContent = "Digits entered: " + enteredDigits;
+    }
+   
+    function checkPiDigit(selectedDigit) {
+      if (enteredDigits.length < expectedPi.length) {
+        if (expectedPi[enteredDigits.length] == selectedDigit) {
+          enteredDigits += selectedDigit;
+          updatePiDisplay();
+          if (enteredDigits.length === expectedPi.length) {
+            alert("Congratulations! You have entered the 13 digits of Pi backward!");
+            originalSentence = "";
+            startBackwardChallenge();
+          }
+        } else {
+          alert("Wrong digit! Resetting the Pi challenge...");
+          enteredDigits = "";
+          updatePiDisplay();
+          generatePiButtons();
+        }
+      }
+    }
+   
+    function startBackwardChallenge() {
+      clearInterval(backwardCountdown);
+      clearInterval(piCountdown);
+      
+      document.getElementById('main-title').style.display = "none";
+      document.getElementById('pi-container').  style.display = "none";
+      document.getElementById('pi-display').style.display = "none";
+      document.getElementById('pi-timer').style.display = "none";
+      document.getElementById('pi-help').style.display = "none";
+     
+      if (!originalSentence) {
+        originalSentence = backwardSentences[Math.floor(Math.random() * backwardSentences.length)];
+      }
+      backwardSentence = originalSentence.split("").reverse().join("");
+ 
+      document.body.style.background = "darkblue";
+      document.body.style.color = "white";
+     
+      document.getElementById('pi-container').style.display = "none";
+      document.getElementById('pi-display').style.display = "none";
+      document.getElementById('pi-timer').style.display = "none";
+ 
+      const container = document.getElementById('minigame-container');
+      container.style.display = "block";
+      container.innerHTML = `
+        <p>Type the following sentence backward:</p>
+        <p id="original-sentence" style="color: yellow; font-size: 20px;">${originalSentence}</p>
+        <input id="backward-input" type="text">
+        <button onclick="checkBackward()">Submit</button>
+        <p id="backward-timer">Time Left: 30s</p>
+      `;
+ 
+      const inputField = document.getElementById("backward-input");
+      inputField.focus();
+ 
+      backwardTimeLeft = 30;
+      const backwardTimerElem = document.getElementById("backward-timer");
+      backwardTimerElem.textContent = `Time Left: ${backwardTimeLeft}s`;
+      backwardCountdown = setInterval(() => {
+        backwardTimeLeft--;
+        backwardTimerElem.textContent = `Time Left: ${backwardTimeLeft}s`;
+        if (backwardTimeLeft <= 0) {
+          clearInterval(backwardCountdown);
+          failGame();
+        }
+      }, 1000);
+    }
+   
+    // When the backward challenge is cleared, start the final (dino) phase.
+    function checkBackward() {
+      const userInput = document.getElementById("backward-input").value.trim();
+      if (userInput === backwardSentence) {
+        clearInterval(backwardCountdown);
+        alert("You did it! Moving on to the final phase!");
+        startFinalPhase();
+      } else {
+        clearInterval(backwardCountdown);
+        alert("Incorrect! The sentence is getting longer...");
+        originalSentence += " " + backwardSentences[Math.floor(Math.random() * backwardSentences.length)];
+        startBackwardChallenge();
+      }
+    }
+   
+    updateProgress();
+   
+    /*******************************
+     * Final Phase: Upside-Down Dino *
+     *******************************/
+    function startFinalPhase() {
+      // Hide loading/minigame elements.
+      document.getElementById('main-title').style.display = "none";
+      document.getElementById('progress-bar').style.display = "none";
+      document.getElementById('loading-text').style.display = "none";
+      document.getElementById('instructions').style.display = "none";
+      document.getElementById('impossible-toggle').style.display = "none";
+      document.getElementById('minigame-container').style.display = "none";
+      document.getElementById('pi-container').style.display = "none";
+      document.getElementById('pi-display').style.display = "none";
+      document.getElementById('pi-timer').style.display = "none";
+      document.getElementById('pi-container').style.display = "none";
+      document.getElementById('pi-display').style.display = "none";
+      document.getElementById('pi-timer').style.display = "none";
+      document.getElementById('pi-help').style.display = "none";
+      
+      // Show final phase elements.
+      const canvas = document.getElementById("gameCanvas");
+      canvas.style.display = "block";
+      const chatDiv = document.getElementById("chat");
+      chatDiv.style.display = "block";
+      showChat("Press SPACE to jump. ");
+      // Also show the extra challenge containers.
+      document.getElementById('stress-container').style.display = "block";
+      document.getElementById('quick-click-container').style.display = "block";
+     
+      const ctx = canvas.getContext("2d");
+     
+      // Apply transformation to flip the canvas 180° (upside down & reversed).
+      const ground = 130;
+      // The player (a glowing gradient circle) now uses the same coordinates.
+      const player = {
+        x: 50,
+        y: ground - 20,
+        width: 20,
+        height: 20,
+        velocityY: 0,
+        jumpForce: 6,
+        gravity: 0.3,
+        isJumping: false
+      };
+     
+      // Instead of plain blocks, obstacles are now rotating, colorful triangles.
+      let obstacles = [];
+      let obstacleSpawnTimer = 0;
+      let obstacleSpawnInterval = 90;
+      let gameOver = false;
+      let score = 0;
+      let dinoLives = 3; // Start with 3 lives.
+     
+      function spawnObstacle() {
+        const obstacle = {
+          x: canvas.width, // Spawn on right.
+          y: ground - 15,
+          width: 20,
+          height: 20,
+          speed: 3 + score * 0.1,
+          angle: 0,
+          angularSpeed: (Math.random() - 0.5) * 0.1
+        };
+        obstacles.push(obstacle);
+      }
+     
+      function updateFinal() {
+        if (gameOver) return;
+        // Player jump physics
+        if (player.isJumping) {
+          player.velocityY -= player.gravity;
+          player.y -= player.velocityY;
+          if (player.y >= ground - player.height) {
+            player.y = ground - player.height;
+            player.isJumping = false;
+            player.velocityY = 0;
+          }
+        }
+        // Update obstacles
+        for (let i = obstacles.length - 1; i >= 0; i--) {
+          obstacles[i].x -= obstacles[i].speed;
+          obstacles[i].angle += obstacles[i].angularSpeed;
+          // Collision detection in original coords
+          if (
+            obstacles[i].x < player.x + player.width &&
+            obstacles[i].x + obstacles[i].width > player.x &&
+            obstacles[i].y < player.y + player.height &&
+            obstacles[i].y + obstacles[i].height > player.y
+          ) {
+            if (!gameOver) {
+              handleCollision();
+            }
+          }
+          if (obstacles[i].x + obstacles[i].width < 0) {
+            obstacles.splice(i, 1);
+            score++;
+          }
+        }
+        obstacleSpawnTimer++;
+        if (obstacleSpawnTimer > obstacleSpawnInterval) {
+          spawnObstacle();
+          obstacleSpawnTimer = 0;
+          obstacleSpawnInterval = 60 + Math.floor(Math.random() * 40);
+        }
+        // Check win condition: reaching a score of 50
+        if(score >= 50 && !gameOver) {
+          winGame();
+          return;
+        }
+      }
+     
+      function drawFinal() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.save();
+        // Flip the canvas 180° (both axes)
+        ctx.translate(canvas.width, canvas.height);
+        ctx.rotate(Math.PI);
+        // Draw ground
+        ctx.fillStyle = "#555";
+        ctx.fillRect(0, ground, canvas.width, canvas.height - ground);
+        // Draw player as a gradient circle
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(player.x + player.width/2, player.y + player.height/2, player.width/2, 0, Math.PI*2);
+        let gradient = ctx.createRadialGradient(player.x + player.width/2, player.y + player.height/2, player.width/4, player.x + player.width/2, player.y + player.height/2, player.width/2);
+        gradient.addColorStop(0, "#00ff00");
+        gradient.addColorStop(1, "#003300");
+        ctx.fillStyle = gradient;
+        ctx.fill();
+        ctx.restore();
+        // Draw obstacles as rotating triangles
+        obstacles.forEach(obs => {
+          ctx.save();
+          ctx.translate(obs.x + obs.width/2, obs.y + obs.height/2);
+          ctx.rotate(obs.angle);
+          ctx.fillStyle = "#ff00ff";
+          ctx.beginPath();
+          ctx.moveTo(-obs.width/2, obs.height/2);
+          ctx.lineTo(obs.width/2, obs.height/2);
+          ctx.lineTo(0, -obs.height/2);
+          ctx.closePath();
+          ctx.fill();
+          ctx.restore();
+        });
+        // Draw score and lives
+        ctx.fillStyle = "#fff";
+        ctx.font = "16px Arial";
+        ctx.fillText("Score: " + score, canvas.width - 100, 20);
+        ctx.fillText("Lives: " + dinoLives, 20, 20);
+        if (gameOver) {
+          ctx.fillStyle = "#fff";
+          ctx.font = "24px Arial";
+          ctx.fillText("Game Over!", canvas.width/2 - 50, canvas.height/2);
+          showChat("Game Over! Press R to restart final phase.");
+        }
+        ctx.restore();
+      }
+     
+      function gameLoopFinal() {
+        updateFinal();
+        drawFinal();
+        if (!gameOver) {
+          requestAnimationFrame(gameLoopFinal);
+        }
+      }
+     
+      function showChat(msg) {
+        chatDiv.innerText = msg;
+        chatDiv.style.display = "block";
+      }
+      function hideChat() {
+        chatDiv.style.display = "none";
+      }
+     
+      function handleCollision() {
+        dinoLives--;
+        gameOver = true;
+        showChat("You lost a life! Lives remaining: " + dinoLives + ". Press R to restart final phase.");
+        if(dinoLives <= 0) {
+          setTimeout(() => {
+            alert("No lives remaining! Resetting progress to loading phase.");
+            failGame();
+          }, 1000);
+        }
+      }
+     
+      // winGame() triggers a hi-tech screenshake and a cool transition,
+      // then displays the fake BSOD overlay, fades to black with a virus message,
+      // and finally resets the game with an alert.
+      function winGame() {
+        gameOver = true;
+        showChat("Congratulations! You reached 50 points!");
+        clearInterval(stressInterval);
+        clearInterval(quickClickInterval);
+        document.body.classList.add("hi-tech-shake", "win-transition");
+        setTimeout(() => {
+          document.body.classList.remove("hi-tech-shake", "win-transition");
+          // Show fake BSOD overlay (blue screen)
+          document.getElementById("bsod").style.display = "block";
+          // After a delay, fade to black with a virus message overlay
+          setTimeout(() => {
+              // Create virus message overlay if it doesn't exist
+              let virusMsgDiv = document.getElementById("virus-message");
+              if(!virusMsgDiv) {
+                  virusMsgDiv = document.createElement("div");
+                  virusMsgDiv.id = "virus-message";
+                  virusMsgDiv.style.position = "fixed";
+                  virusMsgDiv.style.top = "0";
+                  virusMsgDiv.style.left = "0";
+                  virusMsgDiv.style.width = "100vw";
+                  virusMsgDiv.style.height = "100vh";
+                  virusMsgDiv.style.background = "black";
+                  virusMsgDiv.style.color = "white";
+                  virusMsgDiv.style.fontFamily = "Consolas, monospace";
+                  virusMsgDiv.style.textAlign = "center";
+                  virusMsgDiv.style.paddingTop = "30vh";
+                  virusMsgDiv.style.zIndex = "10000";
+                  virusMsgDiv.style.opacity = "0";
+                  virusMsgDiv.style.transition = "opacity 2s";
+                  virusMsgDiv.innerHTML = "<p>Now imagine if this led to a virus...<br>Stay safe and be careful about which links you click on.</p>";
+                  document.body.appendChild(virusMsgDiv);
+              }
+              // Hide the BSOD overlay
+              document.getElementById("bsod").style.display = "none";
+              // Fade in the virus message overlay
+              virusMsgDiv.style.display = "block";
+              setTimeout(() => {
+                  virusMsgDiv.style.opacity = "1";
+              }, 50);
+              // After the fade in, alert and reset the game
+              setTimeout(() => {
+                  alert("An unexpected error occurred. Please try again later.😉");
+                  resetGame();
+              }, 3000);
+          }, 3000);
+        }, 1500);
+      }
+     
+      // Keyboard handling: Space to jump, R to restart final phase.
+      document.addEventListener("keydown", function(e) {
+        if (e.code === "Space" && !player.isJumping && !gameOver) {
+          player.isJumping = true;
+          player.velocityY = player.jumpForce;
+        }
+        if (e.code === "KeyR" && gameOver && dinoLives > 0) {
+          restartFinalPhase();
+        }
+      });
+     
+      function restartFinalPhase() {
+        if (dinoLives > 0) {
+          gameOver = false;
+          obstacles = [];
+          score = 0;
+          player.y = ground - player.height;
+          player.velocityY = 0;
+          player.isJumping = false;
+          hideChat();
+          requestAnimationFrame(gameLoopFinal);
+        }
+      }
+     
+      // Start the final phase loop.
+      gameLoopFinal();
+     
+      /********************
+       * Final Phase Minigames *
+       ********************/
+      function startStressMinigames() {
+        stressInterval = setInterval(triggerStressMinigame, 15000);
+      }
+     
+      function triggerStressMinigame() {
+        const stressContainer = document.getElementById("stress-container");
+        stressContainer.innerHTML = "";
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const target = letters.charAt(Math.floor(Math.random() * letters.length));
+        const prompt = document.createElement("p");
+        prompt.textContent = `Click and hold the letter '${target}' for 2 seconds!`;
+        const btn = document.createElement("button");
+        btn.textContent = target;
+        btn.style.fontSize = "24px";
+        stressContainer.appendChild(prompt);
+        stressContainer.appendChild(btn);
+        let holdTimer;
+        btn.addEventListener("mousedown", () => {
+          holdTimer = setTimeout(() => {
+            prompt.textContent = `Success! You held '${target}' for 2 seconds! Bonus +5 points!`;
+            score += 5;
+            setTimeout(() => {
+              stressContainer.innerHTML = "";
+            }, 2000);
+          }, 2000);
+        });
+        btn.addEventListener("mouseup", () => {
+          clearTimeout(holdTimer);
+          prompt.textContent = `Failed! You didn't hold long enough.`;
+          setTimeout(() => {
+            stressContainer.innerHTML = "";
+          }, 2000);
+        });
+      }
+     
+      function startQuickClickChallenge() {
+        quickClickInterval = setInterval(triggerQuickClickChallenge, 20000);
+      }
+     
+      function triggerQuickClickChallenge() {
+        const quickContainer = document.getElementById("quick-click-container");
+        quickContainer.innerHTML = "";
+        const prompt = document.createElement("p");
+        prompt.textContent = "Click the red circle within 3 seconds for +10 points!";
+        quickContainer.appendChild(prompt);
+        const circle = document.createElement("div");
+        circle.classList.add("quick-circle");
+        quickContainer.appendChild(circle);
+        let clicked = false;
+        circle.addEventListener("click", () => {
+          if (!clicked) {
+            clicked = true;
+            prompt.textContent = "Success! +10 points awarded!";
+            score += 10;
+            setTimeout(() => {
+              quickContainer.innerHTML = "";
+            }, 2000);
+          }
+        });
+        setTimeout(() => {
+          if (!clicked) {
+            prompt.textContent = "Too slow!";
+            setTimeout(() => {
+              quickContainer.innerHTML = "";
+            }, 2000);
+          }
+        }, 3000);
+      }
+     
+      startStressMinigames();
+      startQuickClickChallenge();
+     
+      setInterval(() => {
+        if (!gameOver) {
+          const messages = [
+          "Reach a score of 50 to move on" , 
+          "Run faster, flipped runner!",
+            "Your world is upside down!",
+            "Defy gravity!",
+            "This is madness!"
+          ];
+          const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+          showChat(randomMsg);
+          setTimeout(hideChat, 2000);
+        }
+      }, 5000);
+    }
+  </script>
+</body>
 </html>
+
+
+
+
+
+
